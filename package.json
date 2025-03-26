@@ -16,5 +16,10 @@
     "url": "https://github.com/areyes2853/-intro-to-mongoose-lab-/issues"
   },
   "homepage": "https://github.com/areyes2853/-intro-to-mongoose-lab-#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.13.0",
+    "prompt-sync": "^4.2.0"
+  }
 }
