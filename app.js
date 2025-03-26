@@ -51,58 +51,67 @@ const viewCustomers = async ()=>{
 
 }
 
-const updateCustomer = async ()=>{
+const updateCustomer = async () => {
     const customers = await Customer.find();
     if (customers.length === 0) {
-        console.log('No customers found.');
-        return;
+      console.log('No customers found.');
+      return;
     }
-
+  
     customers.forEach(customer => {
-        console.log(`ID: ${customer._id}, Name: ${customer.name}, Age: ${customer.age}`);
+      console.log(`ID: ${customer._id}, Name: ${customer.name}, Age: ${customer.age}`);
     });
-
+  
     const id = prompt('Enter the ID of the customer to update: ');
-    const customer = await Customer.findById(id);
-
-    if (!customer) {
-        console.log('Customer not found.');
-        mainMenu();
-        return;
+  
+    // Validate the id before querying the database
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log('Customer not found.');
+      return;
     }
-
+  
+    const customer = await Customer.findById(id);
+    // if (!customer) {
+    //   console.log('Customer not found.');
+    //   return;
+    // }
+  
     const name = prompt(`Enter new name (${customer.name}): `) || customer.name;
     const age = parseInt(prompt(`Enter new age (${customer.age}): `)) || customer.age;
-
+  
     await Customer.findByIdAndUpdate(id, { name, age });
     console.log('Customer updated successfully.');
-    mainMenu();
+  };
+  
 
-
-}
-
-const deleteCustomer = async ()=>{
+  const deleteCustomer = async () => {
     const customers = await Customer.find();
     if (customers.length === 0) {
-        console.log('No customers found.');
-        return;
+      console.log('No customers found.');
+      return;
     }
-
+  
     customers.forEach(customer => {
-        console.log(`ID: ${customer._id}, Name: ${customer.name}, Age: ${customer.age}`);
+      console.log(`ID: ${customer._id}, Name: ${customer.name}, Age: ${customer.age}`);
     });
-
+  
     const id = prompt('Enter the ID of the customer to delete: ');
-    const customer = await Customer.findByIdAndDelete(id);
-
-    if (!customer) {
-        console.log('Customer not found.');
-        return;
+  
+    // Validate the id before querying the database
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log('Customer not found.');
+      return;
     }
-
+  
+    const customer = await Customer.findByIdAndDelete(id);
+    // if (!customer) {
+    //   console.log('Customer not found.');
+    //   return;
+    // }
+  
     console.log('Customer deleted successfully.');
-
-}
+  };
+  
  // The functions calls to run queries in our db will go here as we write them.
 
  const mainMenu = async () => {
